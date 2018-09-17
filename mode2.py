@@ -106,29 +106,31 @@ while True:
         game[move] = turn
     else:
         # Human's turn
+        
+        while True:
+            game_draw()
 
-        game_draw()
+            try:
+                # Get human move, raise error if neccecary
+                move = int(input())
+                if move not in range(9):
+                    raise ValueError
+                if game[move] != 0:
+                    raise TicTacToeIndexError
+                game[move] = turn
 
-        try:
-            # Get human move, raise error if neccecary
-            move = int(input())
-            if move not in range(9):
-                raise ValueError
-            if game[move] != 0:
-                raise TicTacToeIndexError
-            game[move] = turn
+                cls()
+                break
 
-            cls()
-
-        except ValueError:
-            # Invalid move
-            cls()
-            print("You may only enter whole numbers from 0 to 8.")
-        except TicTacToeIndexError:
-            # Field occupied
-            cls()
-            print("You may only tick into unoccupied fields.")
-
+            except ValueError:
+                # Invalid move
+                cls()
+                print("You may only enter whole numbers from 0 to 8.")
+            except TicTacToeIndexError:
+                # Field occupied
+                cls()
+                print("You may only tick into unoccupied fields.")
+        
     turn_swap()
     # Win / Draw detection
     won = win_detection()
